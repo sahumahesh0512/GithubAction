@@ -1,39 +1,36 @@
 name: CI Workflow
+
 on:
   push:
     branches:
       - main
- 
+
 jobs:
   test:
     runs-on: ubuntu-latest
- 
-    strategy:
-      matrix:
-        python-version: [3.7, 3.8]
- 
+
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
- 
+
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
-          python-version: ${{ matrix.python-version }}
- 
+          python-version: 3.7
+
       - name: Install Dependencies
         run: |
-          python -m pip install --upgrade pip
           pip install -r requirements.txt
-      - name: Run Tests
+          pip install pytest pytest-cov
+
+      - name: Run Tests with Coverage
         run: |
-          python -m pytest app.py
- 
+          pytest --cov=./app.py tests/
+      
       - name: Generate Coverage Report
         run: |
-          coverage run -m pytest tests/ --ignore=app.py
           coverage report -m > coverage.txt
- 
+
       - name: Upload Coverage Report
         uses: actions/upload-artifact@v2
         with:
