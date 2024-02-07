@@ -48,6 +48,7 @@ jobs:
 
       - name: Build
         # Placeholder for any build steps (e.g., compiling code, packaging)
+        run: echo "Build steps go here..."
 
   deploy:
     needs: build
