@@ -28,8 +28,6 @@ jobs:
           cd src
           python -m unittest test_calculator.py
 
-
-
   build:
     needs: test
     runs-on: ubuntu-latest
@@ -49,7 +47,7 @@ jobs:
           pip install -r requirements.txt
 
       - name: Build
-        # Placeholder for any build steps (e.g.., compiling code, packaging)
+        # Placeholder for any build steps (e.g., compiling code, packaging)
 
   deploy:
     needs: build
@@ -73,4 +71,3 @@ jobs:
       - name: Deploy to production
         # Placeholder for deployment steps (e.g., deploying to a server)
         run: echo "Deployment steps go here..."
-
