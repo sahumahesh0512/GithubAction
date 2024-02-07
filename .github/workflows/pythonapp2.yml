@@ -48,7 +48,7 @@ jobs:
           pip install -r requirements.txt
 
       - name: Build
-        # Placeholder for any build steps (e.g., compiling code, packaging)
+        # Placeholder for any build steps (e.g.., compiling code, packaging)
 
   deploy:
     needs: build
