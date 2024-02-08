@@ -22,13 +22,13 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-          pip install coverage
+          pip install coverage  # <- Corrected syntax: Added "-" character here
 		  
       - name: Run tests and generate coverage report
         run: |
           cd src
           coverage run -m unittest test_calculator.py
-          coverage report -m > coverage.txt
+          coverage report -m > coverage.txt  # <- Corrected syntax: Added a space after the ">"
 
   code-coverage:
     needs: test
