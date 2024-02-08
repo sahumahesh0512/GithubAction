@@ -1,4 +1,4 @@
-name: Python CI/CD
+name: Python-Calculator-CI/CD
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest  # Specify the runner at the job level
 
     steps:
       - name: Checkout code
@@ -23,27 +23,36 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Run tests                
+      - name: Run tests and generate coverage report
         run: |
           cd src
-          python -m unittest test_calculator.py
+          coverage run -m unittest test_calculator.py
+          coverage report -m > coverage.txt
 
-  build:
+  code-coverage:
     needs: test
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest  # Specify the runner at the job level
 
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-      - name: Build
-        # Placeholder for any build steps (e.g., compiling code, packaging)
-        run: echo "Build steps go here..."
+      - name: Archive code coverage report
+        uses: actions/upload-artifact@v2
+        with:
+          name: code-coverage-report
+          path: src/coverage.txt
 
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    if: success()
+  upload-artifact:
+    needs: test
+    runs-on: ubuntu-latest  # Specify the runner at the job level
 
     steps:
-      - name: Deploy to production
-        # Placeholder for deployment steps (e.g., deploying to a server)
-        run: echo "Deployment steps go here..."
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: calculator-artifact
+          path: Artifacts  # Adjust the path to include the directory containing your artifact
