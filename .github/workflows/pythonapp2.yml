@@ -22,26 +22,13 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
+          pip install coverage  # Install coverage tool
 
       - name: Run tests and generate coverage report
         run: |
           cd src
           coverage run -m unittest test_calculator.py
           coverage report -m > coverage.txt
-
-  code-coverage:
-    needs: test
-    runs-on: ubuntu-latest  # Specify the runner at the job level
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Archive code coverage report
-        uses: actions/upload-artifact@v2
-        with:
-          name: code-coverage-report
-          path: src/coverage.txt
 
   upload-artifact:
     needs: test
