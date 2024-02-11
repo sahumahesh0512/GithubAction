@@ -1,59 +1,64 @@
 name: Python-Calculator-CI/CD
-
+ 
 on:
   push:
     branches:
       - main
-
+ 
 jobs:
   test:
     runs-on: ubuntu-latest  # Specify the runner at the job level
-
+ 
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-
+ 
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
-          python-version: '3.x'
-
+          python-version: '3.9'
+ 
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements.txt
           pip install coverage
-
       - name: Run tests and generate coverage report
         run: |
           cd src
           coverage run -m unittest test_calculator.py
           coverage report -m > coverage.txt
-
+  run-application:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.9'
+    - name: Set execute permissions
+      run: chmod +x src/calculator.py
+    - name: Run main application code
+      run: python src/calculator.py
   code-coverage:
     needs: test
     runs-on: ubuntu-latest  # Specify the runner at the job level
-
+ 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
       - name: Archive code coverage report
         uses: actions/upload-artifact@v2
         with:
           name: code-coverage-report
           path: src/coverage.txt
-
+ 
   upload-artifact:
     needs: test
     runs-on: ubuntu-latest  # Specify the runner at the job level
-
+ 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
+      - name: Create Artifacts directory
+        run:  mkdir Artifacts
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
-          name: calculator-artifact
-          path: src  # Adjust the path to include the directory containing your artifact
+          name: calculator-artifacts
+          path: Artifacts
