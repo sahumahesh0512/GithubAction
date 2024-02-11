@@ -32,10 +32,10 @@ jobs:
           cd $GITHUB_WORKSPACE  # Move to the root directory of the repository
           coverage run -m unittest src/test_calculator.py
           coverage report -m --omit=*/venv/*  # Remove --fail-under=100 option
+          ls -l  # List files in the current directory for debugging
           if [ -f "coverage.txt" ]; then
             mv coverage.txt $GITHUB_WORKSPACE/coverage.txt  # Move coverage.txt to the root directory
           else
             echo "Coverage report not found."
             exit 1  # Exit with an error if coverage report is not found
           fi
-
