@@ -31,5 +31,5 @@ jobs:
         run: |
           cd $GITHUB_WORKSPACE  # Move to the root directory of the repository
           coverage run -m unittest src/test_calculator.py
-          coverage xml -o coverage.xml
+          coverage xml -o coverage.xml  # Use lowercase filename
 
