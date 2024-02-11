@@ -7,7 +7,7 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-latest  # Specify the runner at the job level
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
@@ -22,37 +22,12 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install coverage
-          
-      - name: Print directory structure
+
+      - name: Print current directory
         run: |
-          ls -R
+          pwd
 
       - name: Run tests and generate coverage report
         run: |
-          cd src
-          coverage run -m unittest test_calculator.py
+          coverage run -m unittest src/test_calculator.py
           coverage report -m > coverage.txt
-
-  code-coverage:
-    needs: test
-    runs-on: ubuntu-latest  # Specify the runner at the job level
-
-    steps:
-      - name: Archive code coverage report
-        uses: actions/upload-artifact@v2
-        with:
-          name: code-coverage-report
-          path: src/coverage.txt
-
-  upload-artifact:
-    needs: test
-    runs-on: ubuntu-latest  # Specify the runner at the job level
-
-    steps:
-      - name: Create Artifacts directory
-        run:  mkdir Artifacts
-      - name: Upload artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: calculator-artifacts
-          path: Artifacts
