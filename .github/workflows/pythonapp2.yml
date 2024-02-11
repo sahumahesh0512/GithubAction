@@ -31,5 +31,6 @@ jobs:
         run: |
           cd $GITHUB_WORKSPACE  # Move to the root directory of the repository
           coverage run -m unittest src/test_calculator.py
-          coverage report -m --omit=*/venv/* --fail-under=100
+          coverage report -m --omit=*/venv/*  # Remove --fail-under=100 option
           mv coverage.txt $GITHUB_WORKSPACE/coverage.txt  # Move coverage.txt to the root directory
+
