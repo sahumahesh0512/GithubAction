@@ -27,18 +27,7 @@ jobs:
           cd src
           coverage run -m unittest test_calculator.py
           coverage report -m > coverage.txt
-  run-application:
-    needs: test
-    runs-on: ubuntu-latest
-    steps:
-    - name: Set up Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: '3.9'
-    - name: Set execute permissions
-      run: chmod +x src/calculator.py
-    - name: Run main application code
-      run: python src/calculator.py
+  
   code-coverage:
     needs: test
     runs-on: ubuntu-latest  # Specify the runner at the job level
