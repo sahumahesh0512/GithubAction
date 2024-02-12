@@ -7,7 +7,7 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-latest  # Specify the runner at the job level
+    runs-on: mahesh-VirtualBox   # Specify the runner at the job level
 
     steps:
       - name: Checkout code
@@ -31,7 +31,7 @@ jobs:
           coverage report -m > coverage.txt
   code-coverage:
     needs: test
-    runs-on: ubuntu-latest  # Specify the runner at the job level
+    runs-on: mahesh-VirtualBox   # Specify the runner at the job level
 
     steps:
       - name: Checkout code
@@ -45,7 +45,7 @@ jobs:
 
   upload-artifact:
     needs: code-coverage
-    runs-on: ubuntu-latest  # Specify the runner at the job level
+    runs-on: mahesh-VirtualBox   # Specify the runner at the job level
 
     steps:
       - name: Checkout code
