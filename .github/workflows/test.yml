@@ -1,0 +1,22 @@
+name: My Workflow
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  my-job:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: my-workspace
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Print working directory
+        run: |
+          pwd
