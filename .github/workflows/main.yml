@@ -9,7 +9,7 @@ jobs:
   build:
     runs-on: self-hosted
     container:
-      image: docker:stable
+      image: mahe1kor/myrepo1:mystaticappimg1
       options: --privileged  # This is required to run Docker within Docker
  
     steps:
