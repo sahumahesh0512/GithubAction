@@ -16,9 +16,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
  
-      - name: Build and run Docker image
-        run: |
-          docker build -t my-docker-image .
-          docker run my-docker-image
+      
       - name: Check for dockerenv file
         run: (ls /.dockerenv && echo Found dockerenv) || (echo No dockerenv)
