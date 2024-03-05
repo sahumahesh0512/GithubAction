@@ -8,14 +8,15 @@ on:
 jobs:
   build:
     runs-on: self-hosted
-    container:
-      image: mahe1kor/myrepo1:mystaticappimg1
-      options: --privileged  # This is required to run Docker within Docker
- 
+  #  container:
+   #   image: mahe1kor/myrepo1:mystaticappimg1
+  
     steps:
+      - name: Log in to Docker Hub
+        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin https://hub.docker.com/
+      - name: Pull private Docker image
+        run: docker pull mahe1kor/myrepo1:mystaticappimg1
       - name: Checkout code
         uses: actions/checkout@v2
- 
-      
       - name: Check for dockerenv file
         run: (ls /.dockerenv && echo Found dockerenv) || (echo No dockerenv)
